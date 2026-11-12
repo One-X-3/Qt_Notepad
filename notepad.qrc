@@ -22,5 +22,6 @@
         <file>img/ToolBar.png</file>
         <file>img/Undo.png</file>
         <file>img/Wrap.png</file>
+        <file>img/Logo.png</file>
     </qresource>
 </RCC>

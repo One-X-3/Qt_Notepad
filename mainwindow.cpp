@@ -1,5 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "aboutdialog.h"
+#include "searchdialog.h"
+#include "replacedialog.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -23,5 +26,26 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+
+void MainWindow::on_actionAbout_triggered()
+{
+    AboutDialog dlg;
+    dlg.exec();
+}
+
+
+void MainWindow::on_actionFind_triggered()
+{
+    SearchDialog dlg;
+    dlg.exec();
+}
+
+
+void MainWindow::on_actionReplace_triggered()
+{
+    ReplaceDialog dlg;
+    dlg.exec();
 }
 
