@@ -36,6 +36,18 @@ private slots:
     void documentWasModified();
 
 
+    void on_actionUndo_triggered();
+
+    void on_actionCut_triggered();
+
+    void on_actionCopy_triggered();
+
+    void on_actionPaste_triggered();
+
+    void on_actionRedo_triggered();
+
+    void on_action_A_triggered();
+
 private:
     Ui::MainWindow *ui;
 
@@ -47,6 +59,8 @@ private:
       void setCurrentFile(const QString &fileName); // 更新窗口标题
       bool maybeSave(); // 检查是否有未保存的修改，并询问用户
       bool saveFile(const QString &fileName); // 实际执行保存动作的底层函数
+
+      void updateEditActions();//用于动态控制按钮可用性
 
 protected:
     void closeEvent(QCloseEvent *event) override;

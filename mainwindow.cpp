@@ -16,6 +16,24 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    // 根据是否有选中文本，控制剪切/复制的可用性
+    connect(ui->textEdit, &QPlainTextEdit::copyAvailable,
+            ui->actionCut, &QAction::setEnabled);
+    connect(ui->textEdit, &QPlainTextEdit::copyAvailable,
+            ui->actionCopy, &QAction::setEnabled);
+
+    // 根据撤销/恢复栈的状态，控制对应按钮的可用性
+    connect(ui->textEdit->document(), &QTextDocument::undoAvailable,
+            ui->actionUndo, &QAction::setEnabled);
+    connect(ui->textEdit->document(), &QTextDocument::redoAvailable,
+            ui->actionRedo, &QAction::setEnabled);
+
+    // 初始化时，先手动禁用剪切/复制/撤销/恢复（因为一开始没有内容/历史）
+    ui->actionCut->setEnabled(false);
+    ui->actionCopy->setEnabled(false);
+    ui->actionUndo->setEnabled(false);
+    ui->actionRedo->setEnabled(false);
+
     statusLabel.setMaximumWidth(150);
     statusLabel.setText("length: " + QString::number(0) + "   lines: " + QString::number(1));
     ui->statusbar->addPermanentWidget(&statusLabel);
@@ -192,3 +210,39 @@ void MainWindow::closeEvent(QCloseEvent *event)
         event->ignore(); // 阻止关闭
     }
 }
+
+void MainWindow::on_actionUndo_triggered()
+{
+    ui->textEdit->undo();
+}
+
+
+void MainWindow::on_actionCut_triggered()
+{
+    ui->textEdit->cut();
+}
+
+
+void MainWindow::on_actionCopy_triggered()
+{
+    ui->textEdit->copy();
+}
+
+
+void MainWindow::on_actionPaste_triggered()
+{
+    ui->textEdit->paste();
+}
+
+
+void MainWindow::on_actionRedo_triggered()
+{
+    ui->textEdit->redo();
+}
+
+
+void MainWindow::on_action_A_triggered()
+{
+     ui->textEdit->selectAll();
+}
+
