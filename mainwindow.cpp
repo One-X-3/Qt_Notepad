@@ -3,6 +3,7 @@
 #include "aboutdialog.h"
 #include "searchdialog.h"
 #include "replacedialog.h"
+#include "codeeditor.h"
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -20,9 +21,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     //根据是否有选中的文本，来控制剪切、复制可不可以使用
-    connect(ui->textEdit, &QPlainTextEdit::copyAvailable,
+    connect(ui->textEdit, &CodeEditor::copyAvailable,
             ui->actionCut, &QAction::setEnabled);
-    connect(ui->textEdit, &QPlainTextEdit::copyAvailable,
+    connect(ui->textEdit, &CodeEditor::copyAvailable,
             ui->actionCopy, &QAction::setEnabled);
 
     // 根据撤销、恢复的状态，控制对应按钮可不可以使用
@@ -360,5 +361,13 @@ void MainWindow::updateStatusBarInfo()
 void MainWindow::on_actionExit_triggered()
 {
     close();
+}
+
+
+void MainWindow::on_actionDisplayLineNumber_triggered()
+{
+    bool visible = ui->textEdit->isLineNumberAreaVisible();
+    ui->textEdit->setLineNumberAreaVisible(!visible);
+    ui->actionDisplayLineNumber->setChecked(!visible);
 }
 
