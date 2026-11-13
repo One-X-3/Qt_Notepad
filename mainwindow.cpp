@@ -19,19 +19,19 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    // 根据是否有选中文本，控制剪切/复制的可用性
+    //根据是否有选中的文本，来控制剪切、复制可不可以使用
     connect(ui->textEdit, &QPlainTextEdit::copyAvailable,
             ui->actionCut, &QAction::setEnabled);
     connect(ui->textEdit, &QPlainTextEdit::copyAvailable,
             ui->actionCopy, &QAction::setEnabled);
 
-    // 根据撤销/恢复栈的状态，控制对应按钮的可用性
+    // 根据撤销、恢复的状态，控制对应按钮可不可以使用
     connect(ui->textEdit->document(), &QTextDocument::undoAvailable,
             ui->actionUndo, &QAction::setEnabled);
     connect(ui->textEdit->document(), &QTextDocument::redoAvailable,
             ui->actionRedo, &QAction::setEnabled);
 
-    // 初始化时，先手动禁用剪切/复制/撤销/恢复（因为一开始没有内容/历史）
+    // 编辑器启动的时候，默认不可以剪切、复制、撤销、恢复
     ui->actionCut->setEnabled(false);
     ui->actionCopy->setEnabled(false);
     ui->actionUndo->setEnabled(false);
@@ -85,8 +85,9 @@ void MainWindow::on_actionAbout_triggered()
 
 void MainWindow::on_actionFind_triggered()
 {
-    SearchDialog dlg;
-    dlg.exec();
+    SearchDialog dlg(this);
+        dlg.setTextEdit(ui->textEdit);
+        dlg.exec();
 }
 
 
