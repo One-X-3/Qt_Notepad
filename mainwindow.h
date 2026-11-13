@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QLabel>
 #include <QPlainTextEdit>
+#include <QFont>
+#include <QColor>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -46,7 +48,17 @@ private slots:
 
     void on_actionRedo_triggered();
 
-    void on_action_A_triggered();
+    void on_actionSelectAll_triggered();
+
+    void on_actionFontColor_triggered();
+
+    void on_actionEditorBackgroundColor_triggered();
+
+    void on_actionFontBackgroundColor_triggered();
+
+    void on_actionAutoLineWrap_triggered();
+
+    void on_actionFont_triggered();
 
 private:
     Ui::MainWindow *ui;

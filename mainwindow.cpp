@@ -10,6 +10,9 @@
 #include <QFileInfo>
 #include <QCloseEvent>
 
+#include <QFontDialog>
+#include <QColorDialog>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -241,8 +244,63 @@ void MainWindow::on_actionRedo_triggered()
 }
 
 
-void MainWindow::on_action_A_triggered()
+void MainWindow::on_actionSelectAll_triggered()
 {
      ui->textEdit->selectAll();
 }
+
+//设置字体
+void MainWindow::on_actionFont_triggered()
+{
+    bool ok;
+        QFont font = QFontDialog::getFont(&ok, ui->textEdit->font(), this, "选择字体");
+        if (ok) {
+            ui->textEdit->setFont(font);
+        }
+}
+
+//设置字体颜色
+void MainWindow::on_actionFontColor_triggered()
+{
+    // 获取当前文本颜色
+    QColor currentColor = ui->textEdit->palette().color(QPalette::Text);
+
+        QColor color = QColorDialog::getColor(currentColor, this, "选择字体颜色");
+    if (color.isValid()) {
+        QPalette palette = ui->textEdit->palette();
+        palette.setColor(QPalette::Text, color); // 设置文本颜色
+        ui->textEdit->setPalette(palette);
+    }
+}
+
+//设置编辑器背景色
+void MainWindow::on_actionEditorBackgroundColor_triggered()
+{
+    QColor color = QColorDialog::getColor(ui->textEdit->palette().color(QPalette::Base), this, "选择编辑器背景色");
+     if (color.isValid()) {
+         QPalette palette = ui->textEdit->palette();
+         palette.setColor(QPalette::Base, color); // 设置背景色
+         ui->textEdit->setPalette(palette);
+     }
+}
+
+//设置字体背景色
+void MainWindow::on_actionFontBackgroundColor_triggered()
+{
+    QColor color = QColorDialog::getColor(ui->textEdit->palette().color(QPalette::Highlight), this, "选择文字选中背景色");
+    if (color.isValid()) {
+        QPalette palette = ui->textEdit->palette();
+        palette.setColor(QPalette::Highlight, color);
+        ui->textEdit->setPalette(palette);
+    }
+}
+
+//自动换行开关
+void MainWindow::on_actionAutoLineWrap_triggered()
+{
+    ui->textEdit->setLineWrapMode(ui->actionAutoLineWrap->isChecked()
+                                  ? QPlainTextEdit::WidgetWidth   // 选中
+                                  : QPlainTextEdit::NoWrap);      // 未选中：不换行
+}
+
 

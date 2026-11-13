@@ -68,7 +68,7 @@
     <addaction name="actionFind"/>
     <addaction name="actionReplace"/>
     <addaction name="separator"/>
-    <addaction name="action_A"/>
+    <addaction name="actionSelectAll"/>
    </widget>
    <widget class="QMenu" name="menu_O">
     <property name="title">
@@ -367,7 +367,7 @@
     <string>Ctrl+Shift+Z</string>
    </property>
   </action>
-  <action name="action_A">
+  <action name="actionSelectAll">
    <property name="icon">
     <iconset resource="notepad.qrc">
      <normaloff>:/img/SelectAll.png</normaloff>:/img/SelectAll.png</iconset>
