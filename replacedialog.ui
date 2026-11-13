@@ -93,7 +93,7 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_5">
        <item>
-        <widget class="QCheckBox" name="cbCaseSensetive">
+        <widget class="QCheckBox" name="cbCaseSensitive">
          <property name="text">
           <string>区分大小写</string>
          </property>

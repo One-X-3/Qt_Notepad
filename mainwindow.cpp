@@ -93,8 +93,9 @@ void MainWindow::on_actionFind_triggered()
 
 void MainWindow::on_actionReplace_triggered()
 {
-    ReplaceDialog dlg;
-    dlg.exec();
+    ReplaceDialog dlg(this);
+        dlg.setTextEdit(ui->textEdit);
+        dlg.exec();
 }
 
 //新建文件
