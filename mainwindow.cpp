@@ -57,6 +57,17 @@ MainWindow::MainWindow(QWidget *parent)
             this, &MainWindow::documentWasModified);
 
     setWindowTitle("无标题 - OneX文本编辑器[*]");
+
+    // 当光标移动时，更新行号和列号
+    connect(ui->textEdit, &QPlainTextEdit::cursorPositionChanged,
+            this, &MainWindow::updateStatusBarInfo);
+
+    // 当文本内容改变时，更新字数和总行数
+    connect(ui->textEdit, &QPlainTextEdit::textChanged,
+            this, &MainWindow::updateStatusBarInfo);
+
+    // 初始化时调用一次，防止初始状态显示错误
+    updateStatusBarInfo();
 }
 
 MainWindow::~MainWindow()
@@ -303,4 +314,49 @@ void MainWindow::on_actionAutoLineWrap_triggered()
                                   : QPlainTextEdit::NoWrap);      // 未选中：不换行
 }
 
+//显示和隐藏状态栏
+void MainWindow::on_actionStatusBar_triggered()
+{
+    ui->statusbar->setVisible(ui->actionStatusBar->isChecked());
+}
+
+//显示和隐藏工具栏
+void MainWindow::on_actionToolBar_triggered()
+{
+    ui->toolBar->setVisible(ui->actionToolBar->isChecked());
+}
+
+//更新状态栏信息
+void MainWindow::updateStatusBarInfo()
+{
+    // 1. 获取当前文本内容
+    QString text = ui->textEdit->toPlainText();
+
+    // 2. 计算总行数
+    int lineCount = text.count("\n") + 1;
+    // 如果文本为空，行数为 1
+    if (text.isEmpty()) {
+        lineCount = 1;
+    }
+
+    // 3. 计算总字符数
+    int charCount = text.length();
+
+    statusLabel.setText("length: " + QString::number(charCount) +
+                        "   lines: " + QString::number(lineCount));
+
+    // 5. 获取当前光标位置
+    QTextCursor cursor = ui->textEdit->textCursor();
+    int currentLine = cursor.blockNumber() + 1; // blockNumber 从 0 开始，所以要 +1
+    int currentCol = cursor.columnNumber() + 1; // columnNumber 从 0 开始，所以要 +1
+
+    statusCursorLabel.setText("Ln: " + QString::number(currentLine) +
+                              "   Col: " + QString::number(currentCol));
+}
+
+
+void MainWindow::on_actionExit_triggered()
+{
+    close();
+}
 
